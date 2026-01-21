@@ -23,4 +23,6 @@ public class Livro {
     private Integer paginasTotais;
     private Integer paginasLidas;
 
+    
+
 }
