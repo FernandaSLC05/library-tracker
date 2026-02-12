@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/livros")
+@CrossOrigin //Permite que o react converse com o java
 
 //Essa classe serve para receber os "pedidos" do front
 public class LivroController {
@@ -27,7 +28,6 @@ public class LivroController {
     public Livro cadastrar(@RequestBody Livro livro) {
         return repository.save(livro); //salvar no banco
     }
-
 
 
 }
