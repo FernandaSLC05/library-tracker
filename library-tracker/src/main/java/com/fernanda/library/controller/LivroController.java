@@ -3,6 +3,7 @@ package com.fernanda.library.controller;
 import com.fernanda.library.model.Livro;
 import com.fernanda.library.repository.LivroRepository;
 
+import com.fernanda.library.service.GoogleBooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +30,12 @@ public class LivroController {
         return repository.save(livro); //salvar no banco
     }
 
+    @Autowired
+    private GoogleBooksService googleService;
+
+    @GetMapping("/buscar-google")
+    public Livro testarBuscaGoogle(@RequestParam String titulo) {
+        return googleService.buscarLivroNaApi(titulo);
+    }
 
 }
