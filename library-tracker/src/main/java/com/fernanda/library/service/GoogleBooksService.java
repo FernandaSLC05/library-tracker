@@ -8,14 +8,23 @@ import com.fernanda.library.model.StatusLeitura;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 @Service
 public class GoogleBooksService {
 
     public Livro buscarLivroNaApi(String tituloDesejado) {
-        String url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + tituloDesejado;
-
-        // O bloco TRY agora protege TUDO, desde a conexão com a internet até a leitura
         try {
+            //Formata o texto para evitar erros de espaço
+            String tituloFormatado = URLEncoder.encode(tituloDesejado, StandardCharsets.UTF_8);
+
+            // Chave API
+            String minhaChave = "AIzaSyDFs-HneQY_RgKRpa2xebiUMueu3a07C8U";
+
+            //A nova URL agora envia o nome do livro E a chave de acesso!
+            String url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + tituloFormatado + "&key=" + minhaChave;
+
             RestTemplate restTemplate = new RestTemplate();
             String respostaGoogle = restTemplate.getForObject(url, String.class);
 
@@ -45,7 +54,6 @@ public class GoogleBooksService {
             return livro;
 
         } catch (Exception e) {
-            // Se o Google bloquear (429) ou der qualquer outro erro, o Java não quebra a tela (Erro 500)
             System.out.println("O Google bloqueou ou deu erro: " + e.getMessage());
             return null;
         }

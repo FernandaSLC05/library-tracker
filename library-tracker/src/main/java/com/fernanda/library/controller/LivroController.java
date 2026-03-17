@@ -38,4 +38,9 @@ public class LivroController {
         return googleService.buscarLivroNaApi(titulo);
     }
 
+    @DeleteMapping("/{id}")
+    public void deletarLivro(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
+
 }
