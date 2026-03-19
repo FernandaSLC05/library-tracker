@@ -16,13 +16,11 @@ public class GoogleBooksService {
 
     public Livro buscarLivroNaApi(String tituloDesejado) {
         try {
-            //Formata o texto para evitar erros de espaço
             String tituloFormatado = URLEncoder.encode(tituloDesejado, StandardCharsets.UTF_8);
 
-            // Chave API
+            // chave API
             String minhaChave = "AIzaSyDFs-HneQY_RgKRpa2xebiUMueu3a07C8U";
 
-            //A nova URL agora envia o nome do livro E a chave de acesso!
             String url = "https://www.googleapis.com/books/v1/volumes?q=intitle:" + tituloFormatado + "&key=" + minhaChave;
 
             RestTemplate restTemplate = new RestTemplate();
@@ -51,10 +49,22 @@ public class GoogleBooksService {
                 livro.setAutor("Autor desconhecido");
             }
 
+            // ---Lógica para extrair a capa ---
+            if (volumeInfo.has("imageLinks")) {
+                JsonNode imageLinks = volumeInfo.get("imageLinks");
+                if (imageLinks.has("thumbnail")) {
+                    livro.setCapaUrl(imageLinks.get("thumbnail").asText());
+                } else if (imageLinks.has("smallThumbnail")) {
+                    livro.setCapaUrl(imageLinks.get("smallThumbnail").asText());
+                }
+            }
+            // Se o livro não tiver a pasta "imageLinks" lá no Google,
+            // o Java simplesmente ignora e não quebra o código!
+
             return livro;
 
         } catch (Exception e) {
-            System.out.println("O Google bloqueou ou deu erro: " + e.getMessage());
+            System.out.println("Erro ao buscar no Google ou processar JSON: " + e.getMessage());
             return null;
         }
     }
