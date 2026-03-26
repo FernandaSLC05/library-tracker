@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/library-tracker.iml" filepath="$PROJECT_DIR$/.idea/library-tracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Books-tracker.iml" filepath="$PROJECT_DIR$/.idea/Books-tracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library-tracker/library-tracker.iml" filepath="$PROJECT_DIR$/library-tracker/library-tracker.iml" />
     </modules>
   </component>
 </project>
